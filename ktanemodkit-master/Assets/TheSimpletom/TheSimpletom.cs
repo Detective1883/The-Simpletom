@@ -9,8 +9,9 @@ using Rnd = UnityEngine.Random;
 
 public class TheSimpletom : MonoBehaviour {
 
-   public KMBombInfo Bomb;
-   public KMAudio Audio;
+
+    [SerializeField]
+    private bool debug;
 
    static int ModuleIdCounter = 1;
    int ModuleId;
@@ -26,11 +27,21 @@ public class TheSimpletom : MonoBehaviour {
 
         //button.OnInteract += delegate () { buttonPress(); return false; };
         string[] labels = {"The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane"};
-        Debug.Log(labels[Rnd.Range(0, labels.Length)]);
+        TextMesh textMesh = transform.Find("The Everything/Claw Text").GetComponent<TextMesh>();
+        string buttonName = labels[Rnd.Range(0, labels.Length)];
+
+        if (debug)
+        {
+            buttonName = labels[0];
+        }
+        textMesh.text = buttonName.Replace(" ", "\n");
     }
 
-   void Start () {
-        
+   void Start () 
+   {
+        int indicatorCount = GetComponent<KMBombInfo>().GetIndicators().Count();
+        int buttonCount = 4 * indicatorCount - 3;
+        Debug.Log(buttonCount);
    }
 
    void Update () {
