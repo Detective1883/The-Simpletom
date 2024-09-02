@@ -17,6 +17,7 @@ public class TheSimpletom : MonoBehaviour
     private int buttonPresses = 0;
     private float timer = 0;
     private bool buttonHeld;
+    IEnumerator SBTimer;
 
     KMSelectable button;
     KMBombModule status;
@@ -45,7 +46,7 @@ public class TheSimpletom : MonoBehaviour
 
         if (debug)
         {
-            buttonName = labels[0];
+            buttonName = labels[2];
         }
         textMesh.text = buttonName.Replace(" ", "\n");
     }
@@ -59,18 +60,37 @@ public class TheSimpletom : MonoBehaviour
             if (ModuleSolved)
                 return;
             buttonHeld = true;
-            timer = 0;
 
             if (buttonPresses == 0)
-                StartCoroutine(RunTimer());
+                StartCoroutine(SimpletomTimer());
             buttonPresses++;
 
             Log($"The button was pressed {buttonPresses} times");
         }
+        if (buttonName == "The Simplebob")
+        {
+            SBTimer = SimplebobTimer();
+            StartCoroutine(SBTimer);
+        }
+            
     }
 
     private void ButtonRelease()
     {
+        if (buttonName == "The Simplebob")
+        {
+            StopCoroutine(SBTimer);
+            Log($"You held the button for {timer.ToString("#.##")} seconds");
+            if (3 < timer && timer < 4)
+            {
+                Solve();
+            }
+            else
+            {
+                status.HandleStrike();
+            }
+        }
+
         buttonHeld = false;
     }
 
@@ -84,6 +104,9 @@ public class TheSimpletom : MonoBehaviour
                 int indicatorCount = GetComponent<KMBombInfo>().GetIndicators().Count();
                 buttonCount = Modulo(4 * indicatorCount - 3, 4);
                 Log($"To solve you must press the button {buttonCount} times");
+                break;
+            case "The Simplebob":
+                Log($"To solve you must hold the button for 3 seconds");
                 break;
 
             default:
@@ -117,7 +140,7 @@ public class TheSimpletom : MonoBehaviour
         ModuleSolved = true;
     }
     
-    private IEnumerator RunTimer()
+    private IEnumerator SimpletomTimer()
     {
         float timer = 0;
         while (timer < 3)
@@ -132,6 +155,14 @@ public class TheSimpletom : MonoBehaviour
         else
         {
             status.HandleStrike();
+        }
+    }
+    private IEnumerator SimplebobTimer()
+    { 
+        while (true)
+        {
+            yield return null;
+            timer += Time.deltaTime;
         }
     }
 
