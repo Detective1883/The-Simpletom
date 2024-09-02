@@ -19,9 +19,10 @@ public class TheSimpletom : MonoBehaviour {
    private bool ModuleSolved;
    private string buttonName;
    private int buttonCount;
-   private int buttonPreses = 0;
+   private int buttonPresses = 0;
+    private float timer = 0;
+    private bool buttonHeld;
 
-    [SerializeField]
     KMSelectable button;
 
    void Awake () {
@@ -34,8 +35,10 @@ public class TheSimpletom : MonoBehaviour {
         
 
         button = transform.Find("The Everything/Button HL").GetComponent<KMSelectable>();
+        
 
         button.OnInteract += delegate () { ButtonPress(); return false; };
+        button.OnInteractEnded += delegate () { ButtonRelease(); };
         
 
         string[] labels = {"The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane"};
@@ -51,12 +54,22 @@ public class TheSimpletom : MonoBehaviour {
 
     private void ButtonPress()
     {
+        //when butt is presssed, set timer to 0 amd start timer
+        //when timer == 3, if button presses is answer, solve mod, otherwise strike
+
         if (ModuleSolved)
             return;
+        buttonHeld = true;
+        timer = 0;
 
-        buttonPreses++;
-        Log($"The button was pressed {buttonPreses} times");
-        Solve();
+
+        buttonPresses++;
+        Log($"The button was pressed {buttonPresses} times");
+    }
+
+    private void ButtonRelease()
+    { 
+        buttonHeld = false;
     }
 
     void Start()
@@ -79,9 +92,12 @@ public class TheSimpletom : MonoBehaviour {
         
    }
 
-   void Update () {
-        
+   void Update () 
+    {
+
     }
+
+
 
     public void Log(string s)
     {
