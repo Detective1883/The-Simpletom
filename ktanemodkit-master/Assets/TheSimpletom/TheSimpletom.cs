@@ -16,7 +16,6 @@ public class TheSimpletom : MonoBehaviour
     private int buttonCount;
     private int buttonPresses = 0;
     private float timer = 0;
-    private bool buttonHeld;
     IEnumerator SBTimer;
 
     KMSelectable button;
@@ -55,12 +54,10 @@ public class TheSimpletom : MonoBehaviour
     {
         //when butt is presssed, set timer to 0 amd start timer
         //when timer == 3, if button presses is answer, solve mod, otherwise strike
+        if (ModuleSolved)
+            return;
         if (buttonName == "The Simpletom")
         {
-            if (ModuleSolved)
-                return;
-            buttonHeld = true;
-
             if (buttonPresses == 0)
                 StartCoroutine(SimpletomTimer());
             buttonPresses++;
@@ -72,7 +69,6 @@ public class TheSimpletom : MonoBehaviour
             SBTimer = SimplebobTimer();
             StartCoroutine(SBTimer);
         }
-            
     }
 
     private void ButtonRelease()
@@ -88,10 +84,9 @@ public class TheSimpletom : MonoBehaviour
             else
             {
                 status.HandleStrike();
+                timer = 0;
             }
         }
-
-        buttonHeld = false;
     }
 
     void Start()
