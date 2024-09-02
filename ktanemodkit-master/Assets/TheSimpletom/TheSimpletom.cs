@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 using KModkit;
 using Rnd = UnityEngine.Random;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class TheSimpletom : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class TheSimpletom : MonoBehaviour
     private int buttonPresses = 0;
     private float timer = 0;
     IEnumerator SBTimer;
+    IEnumerator morseDashCoroutine;
+    const int morseDash = 2;
+    const int morseReset = 5;
+    const int morseBreak = 1;
+    List<string> morseValues;
 
     KMSelectable button;
     KMBombModule status;
@@ -43,9 +50,11 @@ public class TheSimpletom : MonoBehaviour
         TextMesh textMesh = transform.Find("The Everything/Claw Text").GetComponent<TextMesh>();
         buttonName = labels[Rnd.Range(0, labels.Length)];
 
+        morseValues = new List<string>();
+
         if (debug)
         {
-            buttonName = labels[2];
+            buttonName = labels[3];
         }
         textMesh.text = buttonName.Replace(" ", "\n");
     }
@@ -71,7 +80,8 @@ public class TheSimpletom : MonoBehaviour
         }
         if (buttonName == "The Simplejack" || buttonName == "The Simplejill")
         {
-            
+            morseDashCoroutine = MorseDashCoroutine();
+            StartCoroutine(morseDashCoroutine);
         }
     }
 
@@ -90,6 +100,18 @@ public class TheSimpletom : MonoBehaviour
                 status.HandleStrike();
                 timer = 0;
             }
+        }
+        if (buttonName == "The Simplejack" || buttonName == "The Simplejill")
+        {
+            StopCoroutine(morseDashCoroutine);
+            Debug.Log(timer);
+            if (morseDash < timer)
+            {
+                Debug.Log("dash");
+                morseValues[morseValues.Count - 1] = "dash";
+            }
+            timer = 0;
+            Debug.Log(string.Join(" ", morseValues.ToArray()));
         }
     }
 
@@ -167,7 +189,16 @@ public class TheSimpletom : MonoBehaviour
             timer += Time.deltaTime;
         }
     }
+    private IEnumerator MorseDashCoroutine()
+    {
+        morseValues.Add("dot");
+        while(true)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
 
+    }
 
 #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
