@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 114817933349874938}
   - component: {fileID: 114572365571879002}
   - component: {fileID: 114731892562298510}
-  - component: {fileID: 114609445116274704}
+  - component: {fileID: 114355895658778718}
   m_Layer: 0
   m_Name: TheSimpleton
   m_TagString: Untagged
@@ -416,16 +416,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405067962991638}
-  m_Text: 'The
-
-    Simpletom'
+  m_Text: "The \nSimpletom"
   m_OffsetZ: 0
-  m_CharacterSize: 0.005
+  m_CharacterSize: 0.0025
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 55
+  m_FontSize: 100
   m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 2982efb478bc98044abeab8eee5cf8f2, type: 3}
@@ -480,6 +478,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
+--- !u!114 &114355895658778718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991359787617870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac81d28a0ce6f4443a4f6299c725c1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 1
 --- !u!114 &114425255016157706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,19 +530,6 @@ MonoBehaviour:
   ModuleType: SimpleButton
   ModuleDisplayName: The Simpleton
   RequiresTimerVisibility: 0
---- !u!114 &114609445116274704
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1991359787617870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac81d28a0ce6f4443a4f6299c725c1de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bomb: {fileID: 0}
-  Audio: {fileID: 0}
 --- !u!114 &114708604230742568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -615,7 +612,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405067962991638}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0102}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4115748560452874}
@@ -623,6 +620,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0056, y: 0.0793}
+  m_AnchoredPosition: {x: -0.0056, y: 0.07821}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -8,40 +8,40 @@ using KModkit;
 using Rnd = UnityEngine.Random;
 using UnityEditor;
 
-public class TheSimpletom : MonoBehaviour {
-
-
+public class TheSimpletom : MonoBehaviour
+{
     [SerializeField]
     private bool debug;
 
-   static int ModuleIdCounter = 1;
-   int ModuleId;
-   private bool ModuleSolved;
-   private string buttonName;
-   private int buttonCount;
-   private int buttonPresses = 0;
+    static int ModuleIdCounter = 1;
+    int ModuleId;
+    private bool ModuleSolved;
+    private string buttonName;
+    private int buttonCount;
+    private int buttonPresses = 0;
     private float timer = 0;
     private bool buttonHeld;
 
     KMSelectable button;
 
-   void Awake () {
-      ModuleId = ModuleIdCounter++;
+    void Awake()
+    {
+        ModuleId = ModuleIdCounter++;
         /*
         foreach (KMSelectable object in keypad) {
             object.OnInteract += delegate () { keypadPress(object); return false; };
         }
         */
-        
+
 
         button = transform.Find("The Everything/Button HL").GetComponent<KMSelectable>();
-        
+
 
         button.OnInteract += delegate () { ButtonPress(); return false; };
         button.OnInteractEnded += delegate () { ButtonRelease(); };
-        
 
-        string[] labels = {"The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane"};
+
+        string[] labels = { "The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane" };
         TextMesh textMesh = transform.Find("The Everything/Claw Text").GetComponent<TextMesh>();
         buttonName = labels[Rnd.Range(0, labels.Length)];
 
@@ -62,13 +62,15 @@ public class TheSimpletom : MonoBehaviour {
         buttonHeld = true;
         timer = 0;
 
-
+        if (buttonPresses == 0)
+            StartCoroutine(RunTimer());
         buttonPresses++;
+
         Log($"The button was pressed {buttonPresses} times");
     }
 
     private void ButtonRelease()
-    { 
+    {
         buttonHeld = false;
     }
 
@@ -89,10 +91,10 @@ public class TheSimpletom : MonoBehaviour {
                 break;
         }
 
-        
-   }
 
-   void Update () 
+    }
+
+    void Update()
     {
 
     }
@@ -115,15 +117,31 @@ public class TheSimpletom : MonoBehaviour {
         ModuleSolved = true;
     }
 
+    private IEnumerator RunTimer()
+    {
+        float timer = 0;
+        while (timer < 3)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+        Debug.Log("weeeeeeeeeeeeeeeeeee");
+        Debug.Log(buttonPresses);
+    }
+
+
 #pragma warning disable 414
-   private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
+    private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
 #pragma warning restore 414
 
-   IEnumerator ProcessTwitchCommand (string Command) {
-      yield return null;
-   }
+    IEnumerator ProcessTwitchCommand(string Command)
+    {
+        yield return null;
+    }
 
-   IEnumerator TwitchHandleForcedSolve () {
-      yield return null;
-   }
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        yield return null;
+    }
 }
