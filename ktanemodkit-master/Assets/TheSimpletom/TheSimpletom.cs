@@ -39,7 +39,7 @@ public class TheSimpletom : MonoBehaviour
         button.OnInteractEnded += delegate () { ButtonRelease(); };
 
 
-        string[] labels = { "The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane" };
+        string[] labels = { "The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejill" };
         TextMesh textMesh = transform.Find("The Everything/Claw Text").GetComponent<TextMesh>();
         buttonName = labels[Rnd.Range(0, labels.Length)];
 
@@ -68,6 +68,10 @@ public class TheSimpletom : MonoBehaviour
         {
             SBTimer = SimplebobTimer();
             StartCoroutine(SBTimer);
+        }
+        if (buttonName == "The Simplejack" || buttonName == "The Simplejill")
+        {
+            
         }
     }
 
@@ -103,7 +107,10 @@ public class TheSimpletom : MonoBehaviour
             case "The Simplebob":
                 Log($"To solve you must hold the button for 3 seconds");
                 break;
-
+            case "The Simplejack":
+            case "The Simplejill":
+                Log($"To solve you must submit 'HILL' in Morse Code");
+                break;
             default:
                 Debug.Log("Not Implemented");
                 break;
