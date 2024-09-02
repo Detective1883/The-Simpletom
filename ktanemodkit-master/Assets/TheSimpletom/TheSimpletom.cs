@@ -25,16 +25,17 @@ public class TheSimpletom : MonoBehaviour {
         */
 
         //button.OnInteract += delegate () { buttonPress(); return false; };
+        string[] labels = {"The Simpletom", "The Simpletim", "The Simplebob", "The Simplejack", "The Simplejane"};
+        Debug.Log(labels[Rnd.Range(0, labels.Length)]);
+    }
+
+   void Start () {
         
    }
 
-   void Start () {
-        Debug.Log("A");
-   }
-
    void Update () {
-        Debug.Log("B");
-   }
+        
+    }
 
 #pragma warning disable 414
    private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
