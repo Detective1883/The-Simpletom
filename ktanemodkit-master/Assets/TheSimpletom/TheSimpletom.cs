@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using KModkit;
 using Rnd = UnityEngine.Random;
-using UnityEditor;
 
 public class TheSimpletom : MonoBehaviour
 {
@@ -23,6 +19,7 @@ public class TheSimpletom : MonoBehaviour
     private bool buttonHeld;
 
     KMSelectable button;
+    KMBombModule status;
 
     void Awake()
     {
@@ -35,6 +32,7 @@ public class TheSimpletom : MonoBehaviour
 
 
         button = transform.Find("The Everything/Button HL").GetComponent<KMSelectable>();
+        status = GetComponent<KMBombModule>();
 
 
         button.OnInteract += delegate () { ButtonPress(); return false; };
@@ -56,17 +54,19 @@ public class TheSimpletom : MonoBehaviour
     {
         //when butt is presssed, set timer to 0 amd start timer
         //when timer == 3, if button presses is answer, solve mod, otherwise strike
+        if (buttonName == "The Simpletom")
+        {
+            if (ModuleSolved)
+                return;
+            buttonHeld = true;
+            timer = 0;
 
-        if (ModuleSolved)
-            return;
-        buttonHeld = true;
-        timer = 0;
+            if (buttonPresses == 0)
+                StartCoroutine(RunTimer());
+            buttonPresses++;
 
-        if (buttonPresses == 0)
-            StartCoroutine(RunTimer());
-        buttonPresses++;
-
-        Log($"The button was pressed {buttonPresses} times");
+            Log($"The button was pressed {buttonPresses} times");
+        }
     }
 
     private void ButtonRelease()
@@ -113,10 +113,10 @@ public class TheSimpletom : MonoBehaviour
 
     private void Solve()
     {
-        GetComponent<KMBombModule>().HandlePass();
+        status.HandlePass();
         ModuleSolved = true;
     }
-
+    
     private IEnumerator RunTimer()
     {
         float timer = 0;
@@ -125,9 +125,14 @@ public class TheSimpletom : MonoBehaviour
             yield return null;
             timer += Time.deltaTime;
         }
-
-        Debug.Log("weeeeeeeeeeeeeeeeeee");
-        Debug.Log(buttonPresses);
+        if (buttonPresses == buttonCount)
+        {
+            Solve();
+        }
+        else
+        {
+            status.HandleStrike();
+        }
     }
 
 
