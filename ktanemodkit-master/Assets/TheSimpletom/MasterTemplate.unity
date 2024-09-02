@@ -424,8 +424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac81d28a0ce6f4443a4f6299c725c1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bomb: {fileID: 0}
-  Audio: {fileID: 0}
+  debug: 1
+  button: {fileID: 370975336}
 --- !u!114 &855725813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,9 +818,7 @@ TextMesh:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1700830834}
-  m_Text: 'The
-
-    Simpletom'
+  m_Text: "The \nSimpletom"
   m_OffsetZ: 0
   m_CharacterSize: 0.005
   m_LineSpacing: 1
