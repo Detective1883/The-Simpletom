@@ -3,10 +3,8 @@ using System.Linq;
 using UnityEngine;
 using KModkit;
 using Rnd = UnityEngine.Random;
-using NUnit.Framework;
 using System.Collections.Generic;
-using HarmonyLib;
-using System.Runtime.CompilerServices;
+using System.Net;
 
 public class TheSimpletom : MonoBehaviour
 {
@@ -32,9 +30,12 @@ public class TheSimpletom : MonoBehaviour
     const int morseSubmit = 100;
     List<List<string>> morseValues;
     private float inactiveTimer = 0;
-
+    KMAudio Audio;
     KMSelectable button;
     KMBombModule status;
+
+    [SerializeField]
+    AudioClip[] sounds;
 
     void Awake()
     {
@@ -48,7 +49,7 @@ public class TheSimpletom : MonoBehaviour
 
         button = transform.Find("The Everything/Button HL").GetComponent<KMSelectable>();
         status = GetComponent<KMBombModule>();
-
+        Audio = GetComponent<KMAudio>();
 
         button.OnInteract += delegate () { ButtonPress(); return false; };
         button.OnInteractEnded += delegate () { ButtonRelease(); };
@@ -108,6 +109,7 @@ public class TheSimpletom : MonoBehaviour
         {
             breaktimer = 0;
             submittimer = 0;
+            Audio.PlaySoundAtTransform(sounds[2].name, transform);
         }
     }
 
@@ -174,31 +176,38 @@ public class TheSimpletom : MonoBehaviour
         if (ModuleSolved)
             return;
         int lastListIndex = morseValues.Count - 1;
-        List<string> lastList = morseValues[lastListIndex];
-        List<string> firstList = morseValues[0];
+        List<string> lastList = null;
+        List<string> firstList = null;
+        if (morseValues.Count != 0)
+        {
+           lastList = morseValues[lastListIndex];
+           firstList = morseValues[0];
+        }
         if (buttonHeld)
         {
             dashordot++;
             if (dashordot == morseDash)
             {
-                Debug.Log("dash sound effect");
+                Audio.PlaySoundAtTransform(sounds[1].name, transform);
             }
             if (dashordot == morseReset)
             {
-                Debug.Log("reset sound effect");
+                Audio.PlaySoundAtTransform(sounds[3].name, transform);
+                morseValues.Clear();
+                morseValues.Add(new List<string>());
             }
         }
-        else if (lastList.Count > 0)
+        else if (lastList != null && lastList.Count > 0)
         {
             breaktimer++;
             if (breaktimer == morseBreak)
             {
-                Debug.Log("break sound effect");
+                Audio.PlaySoundAtTransform(sounds[0].name, transform);
                 PrintAllLists();
                 morseValues.Add(new List<string>());
             }
         }
-        else if (firstList.Count > 0)
+        else if (firstList != null && firstList.Count > 0)
         {
             submittimer++;
             if (submittimer == morseSubmit)
